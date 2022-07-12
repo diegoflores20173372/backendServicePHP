@@ -1,0 +1,33 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+body{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+}
+
+.container{
+    width: 360px;
+    height: min-content;
+    padding: 18px;
+    border-radius: 12px;
+    background: rgb(243, 204, 132);
+}
+
+.container h1{
+    font-size: 36px;
+    margin-bottom: 3%;
+    align-items: center;
+    text-align: center;
+}
+.container form .form-group{
+    margin-bottom: 2%;
+
+}
