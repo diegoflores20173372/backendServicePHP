@@ -1,36 +1,87 @@
 <!DOCTYPE html>
 <html>
-    <head>
-            <meta charset="UTF-8">
-            <link rel="stylesheet" href="css/style.css">
-            <title>Notificacion Android-Web</title>
 
-            <!--BOOTSTRAP-->
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Notificacion Android-Web</title>
 
-    </head>
-    <body>
-        <header>
-           
-        </header>
-        <div class="container">
-            <h1>Inserta los datos</h1>
-            <p>Este aplicativo permite enviar los datos a Firebase Cloud Message y a su vez a un dispositivo Andorid</p>
-            <form action="index.php" method="post">
-                <div class="form-group">
-                    <label class="form-label">Titulo de Notificacion</label>
-                    <input class="form-control" type="text" id="title_n" name="title_n"/>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Mensaje de Notificacion</label>
-                    <input class="form-control" type="text" id="message_n" name="message_n"/>
-                </div>
-                <div class="form-group">
+    <!--BOOTSTRAP-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+</head>
+
+<body>
+    <header>
+
+    </header>
+    <div class="container">
+        <h1>Inserta los datos</h1>
+        <p>Este aplicativo permite enviar los datos a Firebase Cloud Message y a su vez a un dispositivo Andorid</p>
+        <form action="index.php" method="post">
+            <div class="form-group">
+                <label class="form-label">Titulo de Notificacion</label>
+                <input class="form-control" type="text" id="title_n" name="title_n" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Mensaje de Notificacion</label>
+                <input class="form-control" type="text" id="message_n" name="message_n" />
+            </div>
+            <div>
+                <input type="hidden" id="listatokens" name="listatokens" />
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger w-100">Enviar</button>
-                </div>
-            </form>
-        </div>
-    </body>
+            </div>
+        </form>
+    </div>
+</body>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js";
+    import { getFirestore, doc, getDoc, getDocs, collection } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js";
+
+    // Initialize Firestore through Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyDilBFkC5swu3rgEeHvuqQYQMcoKYBh-wQ",
+        authDomain: "examen2-danp.firebaseapp.com",
+        databaseURL: "https://examen2-danp-default-rtdb.firebaseio.com",
+        projectId: "examen2-danp",
+        storageBucket: "examen2-danp.appspot.com",
+        messagingSenderId: "643584258055",
+        appId: "1:643584258055:web:f39b120e56c1dd423bbaa2",
+        measurementId: "G-0KP8BJNMQW"
+    };
+
+    const app = initializeApp(firebaseConfig)
+    var db = getFirestore(app);
+
+    // Get a list of cities from your database
+    async function getTokens(db) {
+        const tokensCol = collection(db, 'tokens_devices');
+        const tokenSnapshot = await getDocs(tokensCol);
+        const tokenList = tokenSnapshot.docs.map(doc => doc.data());
+        return tokenList;
+    }
+
+    var listTokens = "";
+
+    await getTokens(db).then(tokens => {
+        for (var i = 0; i < tokens.length; i++) {
+            listTokens += tokens[i].token+",";
+        }
+    });
+
+    console.log(listTokens);
+    $('#listatokens').val(listTokens);
+
+</script>
+
+
 
 </html>

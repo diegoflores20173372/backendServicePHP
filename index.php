@@ -1,5 +1,5 @@
 <?php
-require_once("index.html");
+require_once "index.html";
 
 function notify($to, $data)
 {
@@ -31,16 +31,19 @@ function notify($to, $data)
 
 $title = $_POST['title_n'];
 $message = $_POST['message_n'];
+$listaTokens = $_POST['listatokens'];
+$tokens = explode(",", $listaTokens);
+foreach ($tokens as $token) {
+    echo $token;
+    
+    $to = $token; //Examen Device
+    $data = array(
+        'title' => $title,
+        'body' => $message,
+    );
+    notify($to, $data);
+}
 
-//$to = "c3PTdXqfQ6aZDbO8YdUWmF:APA91bF_KupHj1t96YQ79Yly00vxCymu4Yu_X1sigZ_m3mb3LaLq5MgvVFl0pvkB_W3YivxxBdP4dBGxrDU9bmju3PqUBlIgxs8f-t1QJaiJRV5Nlzp983OQYZ0xV2MgfHZcFXuBS7i0"; //Test Device
-$to = "crl7DQntSq6HgekxuHssgP:APA91bF_d3aVlXRgDWIEGTFFznspssusO5mdigj4rFPRT4nSVxghOV8oxzD5EtD10gxcD1ITI6lg29WpBHXrzWQH-Eaf9OnKJETtPdIcsNGkK3CAvTDr1ZSKZ0CYOYR2OqODi4bO5bYq"; //Examen Device
-$data = array(
-    'title' => $title,
-    'body' => $message,
-);
-
-
-notify($to, $data);
 echo "Enviando notificacion...<br><br>";
 echo "INTEGRANTES:<br>";
 echo "Valeria Nicoll Calderon Rodriguez<br>";
