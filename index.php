@@ -33,9 +33,7 @@ $title = $_POST['title_n'];
 $message = $_POST['message_n'];
 $listaTokens = $_POST['listatokens'];
 $tokens = explode(",", $listaTokens);
-foreach ($tokens as $token) {
-    echo $token;
-    
+foreach ($tokens as $token) {    
     $to = $token; //Examen Device
     $data = array(
         'title' => $title,
