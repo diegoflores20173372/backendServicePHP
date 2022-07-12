@@ -1,4 +1,5 @@
 <?php
+require_once("index.html");
 
 function notify($to, $data)
 {
